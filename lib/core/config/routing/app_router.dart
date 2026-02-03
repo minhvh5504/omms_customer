@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../../../features/auth/presentation/pages/register/register_page.dart';
 import '../../../features/onboarding/presentation/pages/splash_page.dart';
 import '../../../features/profile/presentation/pages/profile_page.dart';
 import '../../../features/menu/presentation/pages/menu_page.dart';
@@ -19,9 +20,15 @@ class AppRouter {
         path: AppRoutes.splash,
         builder: (context, state) => const SplashPage(),
       ),
+
+      //Auth
       GoRoute(
         path: AppRoutes.login,
         builder: (context, state) => const LoginPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.register,
+        builder: (context, state) => const RegisterPage(),
       ),
 
       // ShellRoute have nav bar
