@@ -1,5 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -29,7 +30,11 @@ class _CustomBottomNavBarState extends ConsumerState<CustomBottomNavBar> {
     'assets/icons/navigation/user.svg',
   ];
 
-  final List<String> labels = ['Menu', 'Cart', 'Profile'];
+  final List<String> labels = [
+    'navigation.menu',
+    'navigation.cart',
+    'navigation.profile',
+  ];
 
   final List<String> routes = [
     AppRoutes.menu,
@@ -95,7 +100,7 @@ class _CustomBottomNavBarState extends ConsumerState<CustomBottomNavBar> {
                   SizedBox(height: 4.w),
 
                   Text(
-                    labels[index],
+                    labels[index].tr(),
                     style: GoogleFonts.poppins(
                       fontSize: 10.sp,
                       color: currentIndex == index

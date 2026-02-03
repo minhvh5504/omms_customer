@@ -1,9 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/card/food_item_card.dart';
 import '../providers/menu_provider.dart';
 
 class MenuPage extends ConsumerWidget {
@@ -39,7 +41,7 @@ class MenuPage extends ConsumerWidget {
             SizedBox(height: 20.h),
             // Header
             Text(
-              'Menu',
+              'menu.title'.tr(),
               textAlign: TextAlign.center,
               style: GoogleFonts.playfairDisplay(
                 fontSize: 24.sp,
@@ -119,91 +121,16 @@ class MenuPage extends ConsumerWidget {
                       ),
                       itemBuilder: (context, index) {
                         final item = state.items[index];
-                        return Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // Image
-                            ClipOval(
-                              child: Image.network(
-                                item.imageUrl,
-                                width: 80.w,
-                                height: 80.w,
-                                fit: BoxFit.cover,
-                                errorBuilder: (context, error, stackTrace) {
-                                  return Container(
-                                    width: 80.w,
-                                    height: 80.w,
-                                    color: Colors.grey.shade200,
-                                    child: Icon(
-                                      Icons.fastfood,
-                                      color: Colors.grey.shade400,
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                            SizedBox(width: 16.w),
-
-                            // Details
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    item.name,
-                                    style: GoogleFonts.inter(
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w700,
-                                      color: AppColors.typoBlack,
-                                    ),
-                                  ),
-                                  SizedBox(height: 4.h),
-                                  Text(
-                                    item.description,
-                                    style: GoogleFonts.inter(
-                                      fontSize: 12.sp,
-                                      color: Colors.grey.shade400,
-                                      height: 1.4,
-                                    ),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  SizedBox(height: 12.h),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        item.price,
-                                        style: GoogleFonts.inter(
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.w700,
-                                          color: AppColors.typoBlack,
-                                        ),
-                                      ),
-                                      Container(
-                                        width: 28.w,
-                                        height: 28.w,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                            8.r,
-                                          ),
-                                          border: Border.all(
-                                            color: Colors.grey.shade200,
-                                          ),
-                                        ),
-                                        child: Icon(
-                                          Icons.add,
-                                          size: 16.sp,
-                                          color: Colors.grey.shade600,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
+                        return FoodItemCard(
+                          imageUrl: item.imageUrl,
+                          name: item.name,
+                          description: item.description,
+                          price: item.price,
+                          showPrice: true,
+                          showAdd: true,
+                          onAdd: () {
+                            // TODO: Add to cart logic
+                          },
                         );
                       },
                     ),
