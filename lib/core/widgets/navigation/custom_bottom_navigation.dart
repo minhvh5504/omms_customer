@@ -24,16 +24,16 @@ class _CustomBottomNavBarState extends ConsumerState<CustomBottomNavBar> {
 
   // SVG paths
   final List<String> icons = [
-    'assets/icons/navigation/home.svg',
-    'assets/icons/navigation/calendar.svg',
-    'assets/icons/navigation/clock.svg',
+    'assets/icons/navigation/clipboard-text.svg',
+    'assets/icons/navigation/cart.svg',
+    'assets/icons/navigation/user.svg',
   ];
 
-  final List<String> labels = ['Menu', 'Card', 'Profile'];
+  final List<String> labels = ['Menu', 'Cart', 'Profile'];
 
   final List<String> routes = [
     AppRoutes.menu,
-    AppRoutes.card,
+    AppRoutes.cart,
     AppRoutes.profile,
   ];
 
