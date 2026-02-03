@@ -292,7 +292,9 @@ class LoginNotifier extends StateNotifier<LoginState> {
   void onForgotPassword(BuildContext context) {}
 
   /// Navigate to Sign Up page
-  void onSignUp(BuildContext context) {}
+  void onSignUp(BuildContext context) {
+    context.go(AppRoutes.register);
+  }
 
   /// Handle Facebook login
   void onLoginWithFacebook(BuildContext context) {}
