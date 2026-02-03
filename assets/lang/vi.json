@@ -48,5 +48,32 @@
       "invalid_email": "Email không hợp lệ",
       "unexpected": "Đã xảy ra lỗi không mong muốn"
     }
+  },
+  "menu": {
+    "title": "Thực đơn",
+    "category": {
+      "main_course": "Món chính",
+      "soup": "Súp",
+      "salad": "Salad",
+      "entry": "Khai vị",
+      "dessert": "Tráng miệng",
+      "drink": "Đồ uống"
+    }
+  },
+  "cart": {
+    "title": "Giỏ hàng",
+    "total_payment": "Tổng thanh toán",
+    "send_order": "Gửi đơn hàng",
+    "empty": "Giỏ hàng trống",
+    "items": "món"
+  },
+  "navigation": {
+    "menu": "Thực đơn",
+    "cart": "Giỏ hàng",
+    "profile": "Cá nhân"
+  },
+  "profile": {
+    "title": "Cá nhân",
+    "logout": "Đăng xuất"
   }
 }

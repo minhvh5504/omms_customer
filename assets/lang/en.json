@@ -48,5 +48,32 @@
       "invalid_email": "Invalid email",
       "unexpected": "An unexpected error occurred"
     }
+  },
+  "menu": {
+    "title": "Menu",
+    "category": {
+      "main_course": "Maincourse",
+      "soup": "Soup",
+      "salad": "Salad",
+      "entry": "Entry",
+      "dessert": "Dessert",
+      "drink": "Drink"
+    }
+  },
+  "cart": {
+    "title": "My Cart",
+    "total_payment": "Total payment",
+    "send_order": "Send Order",
+    "empty": "Your cart is empty",
+    "items": "items"
+  },
+  "navigation": {
+    "menu": "Menu",
+    "cart": "Cart",
+    "profile": "Profile"
+  },
+  "profile": {
+    "title": "Profile",
+    "logout": "Logout"
   }
 }
