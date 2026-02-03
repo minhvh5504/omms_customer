@@ -1,1 +1,28 @@
-{}
+{
+  "login": {
+    "welcome_back": "Welcome back! Please enter your details to\naccess the dashboard.",
+    "email_label": "Email",
+    "email_hint": "Enter your email",
+    "password_label": "Password",
+    "password_hint": "Enter your password",
+    "forgot_password": "Forgot password?",
+    "remember_me": "Remember me",
+    "login_button": "Log in",
+    "no_account": "Don't have an account? ",
+    "sign_up": "Sign up",
+    "error_invalid_email": "Invalid email format",
+    "error_invalid_phone": "Invalid phone format",
+    "error_password_min_length": "At least 8 characters",
+    "error_password_lowercase": "Need at least 1 lowercase letter",
+    "error_password_uppercase": "Need at least 1 uppercase letter",
+    "error_password_special": "Need at least 1 special character",
+    "success_login": "Login successfully",
+    "errors": {
+      "user_not_verified": "User not verified",
+      "wrong_credentials": "Wrong credentials",
+      "failed_connect_server": "Failed to connect to the server",
+      "user_not_found": "User not found",
+      "unexpected": "An unexpected error occurred"
+    }
+  }
+}

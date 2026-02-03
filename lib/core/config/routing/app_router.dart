@@ -3,20 +3,25 @@ import 'package:go_router/go_router.dart';
 import '../../../features/onboarding/presentation/pages/splash_page.dart';
 import '../../../features/profile/presentation/pages/profile_page.dart';
 import '../../../features/menu/presentation/pages/menu_page.dart';
-import '../../../features/card/presentation/pages/card_page.dart';
-import '../../widget/navigation/custom_bottom_navigation.dart';
+import '../../../features/cart/presentation/pages/cart_page.dart';
+import '../../../features/auth/presentation/pages/login/login_page.dart';
+import '../../widgets/navigation/custom_bottom_navigation.dart';
 import 'app_routes.dart';
 
 // Router
 class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: AppRoutes.splash,
+    initialLocation: AppRoutes.login,
     routes: [
       // Route don't have nav bar
       //Onboarding
       GoRoute(
         path: AppRoutes.splash,
         builder: (context, state) => const SplashPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.login,
+        builder: (context, state) => const LoginPage(),
       ),
 
       // ShellRoute have nav bar
@@ -34,8 +39,8 @@ class AppRouter {
             builder: (context, state) => const MenuPage(),
           ),
           GoRoute(
-            path: AppRoutes.card,
-            builder: (context, state) => const CardPage(),
+            path: AppRoutes.cart,
+            builder: (context, state) => const CartPage(),
           ),
           GoRoute(
             path: AppRoutes.profile,
@@ -48,7 +53,7 @@ class AppRouter {
 
   static int _getNavIndex(String path) {
     if (path == AppRoutes.menu) return 0;
-    if (path.startsWith(AppRoutes.card)) return 1;
+    if (path.startsWith(AppRoutes.cart)) return 1;
     if (path.startsWith(AppRoutes.profile)) return 2;
     return 0;
   }
