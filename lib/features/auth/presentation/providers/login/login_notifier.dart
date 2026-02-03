@@ -175,38 +175,40 @@ class LoginNotifier extends StateNotifier<LoginState> {
 
     _setLoading(true);
 
-    final username = state.usernameController.text.trim();
-    final password = state.passwordController.text.trim();
+    context.go(AppRoutes.menu);
 
-    try {
-      final user = await _loginUseCase(username, password, 'nurse', 'app');
-      await ref
-          .read(authProvider.notifier)
-          .login(
-            accessToken: user.accessToken,
-            refreshToken: user.refreshToken,
-          );
+    // final username = state.usernameController.text.trim();
+    // final password = state.passwordController.text.trim();
 
-      await _handleLoginSuccess(context, username, password);
-    } catch (e) {
-      _setLoading(false);
+    // try {
+    //   final user = await _loginUseCase(username, password, 'nurse', 'app');
+    //   await ref
+    //       .read(authProvider.notifier)
+    //       .login(
+    //         accessToken: user.accessToken,
+    //         refreshToken: user.refreshToken,
+    //       );
 
-      _handleFailure(context, e);
+    //   await _handleLoginSuccess(context, username, password);
+    // } catch (e) {
+    //   _setLoading(false);
 
-      String backendMessage = '';
+    //   _handleFailure(context, e);
 
-      if (e is DioException) {
-        final data = e.response?.data;
-        if (data is Map<String, dynamic>) {
-          backendMessage = data['message']?.toString().toLowerCase() ?? '';
-        }
-      }
+    //   String backendMessage = '';
 
-      if (backendMessage.contains('user not verified')) {
-        await _showUnverifiedAccountPopup(context);
-        return;
-      }
-    }
+    //   if (e is DioException) {
+    //     final data = e.response?.data;
+    //     if (data is Map<String, dynamic>) {
+    //       backendMessage = data['message']?.toString().toLowerCase() ?? '';
+    //     }
+    //   }
+
+    //   if (backendMessage.contains('user not verified')) {
+    //     await _showUnverifiedAccountPopup(context);
+    //     return;
+    //   }
+    // }
   }
 
   /// Handle successful login
