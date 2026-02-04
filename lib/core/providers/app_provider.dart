@@ -16,9 +16,9 @@ export '../../../features/auth/presentation/providers/register/register_provider
 export '../../../features/auth/presentation/providers/register/verify_account_provider.dart'
     show verifyAccountNotifierProvider;
 
-// /// Forgot Password
-// export '../../../features/auth/presentation/providers/forgotpassword/send_request_provider.dart'
-//     show sendRequestNotifierProvider;
+/// Forgot Password
+export '../../../features/auth/presentation/providers/forgotpassword/send_request_provider.dart'
+    show sendRequestNotifierProvider;
 
 // /// Profile
 // export '../../../features/profile/presentation/providers/profile/profile_provider.dart'

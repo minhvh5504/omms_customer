@@ -292,7 +292,9 @@ class LoginNotifier extends StateNotifier<LoginState> {
   }
 
   /// Navigate to Forgot Password page
-  void onForgotPassword(BuildContext context) {}
+  void onForgotPassword(BuildContext context) {
+    context.go(AppRoutes.sendrequest);
+  }
 
   /// Navigate to Sign Up page
   void onSignUp(BuildContext context) {
