@@ -12,6 +12,11 @@ class AppRoutes {
   static const String verifypassword = '/verifypassword';
   static const String resetpassword = '/resetpassword';
 
+  // Profile
+  static const String changeprofile = '/changeprofile';
+  static const String changepassword = '/changepassword';
+  static const String selectlanguage = '/selectlanguage';
+
   // Shell routes
   static const String menu = '/menu';
   static const String cart = '/cart';

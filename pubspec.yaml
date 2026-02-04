@@ -12,6 +12,9 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.8
+  # heroicons 
+  heroicons: ^0.11.0
+  # flutter_riverpod
   flutter_riverpod: ^2.4.10
   # navigation
   go_router: ^16.2.2
@@ -61,5 +64,7 @@ flutter:
   assets:
     - .env
     - assets/icons/navigation/
+
+    - assets/images/user/
 
     - assets/lang/

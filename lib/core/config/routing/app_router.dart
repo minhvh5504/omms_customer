@@ -10,6 +10,7 @@ import '../../../features/profile/presentation/pages/profile_page.dart';
 import '../../../features/menu/presentation/pages/menu_page.dart';
 import '../../../features/cart/presentation/pages/cart_page.dart';
 import '../../../features/auth/presentation/pages/login/login_page.dart';
+import '../../../features/profile/presentation/pages/select_language_page.dart';
 import '../../widgets/navigation/custom_bottom_navigation.dart';
 import 'app_routes.dart';
 
@@ -52,6 +53,12 @@ class AppRouter {
       //   path: AppRoutes.resetpassword,
       //   builder: (context, state) => const ResetPasswordPage(),
       // ),
+
+      //Profile
+      GoRoute(
+        path: AppRoutes.selectlanguage,
+        builder: (context, state) => const SelectLanguagePage(),
+      ),
 
       // ShellRoute have nav bar
       ShellRoute(
