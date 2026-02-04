@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../../../features/auth/presentation/pages/forgotpassword/reset_password_page.dart';
+import '../../../features/auth/presentation/pages/forgotpassword/send_request_page.dart';
+import '../../../features/auth/presentation/pages/forgotpassword/verify_password_page.dart';
 import '../../../features/auth/presentation/pages/register/register_page.dart';
+import '../../../features/auth/presentation/pages/register/verify_account_page.dart';
 import '../../../features/onboarding/presentation/pages/splash_page.dart';
 import '../../../features/profile/presentation/pages/profile_page.dart';
 import '../../../features/menu/presentation/pages/menu_page.dart';
@@ -29,6 +33,24 @@ class AppRouter {
       GoRoute(
         path: AppRoutes.register,
         builder: (context, state) => const RegisterPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.verifyaccount,
+        builder: (context, state) => const VerifyAccountPage(),
+      ),
+
+      //Forgot Password
+      GoRoute(
+        path: AppRoutes.sendrequest,
+        builder: (context, state) => const SendRequestPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.verifypassword,
+        builder: (context, state) => const VerifyPasswordPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.resetpassword,
+        builder: (context, state) => const ResetPasswordPage(),
       ),
 
       // ShellRoute have nav bar

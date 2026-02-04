@@ -74,5 +74,50 @@
   "profile": {
     "title": "Cá nhân",
     "logout": "Đăng xuất"
+  },
+  "send_request": {
+    "title": "Quên mật khẩu",
+    "phone_label": "Số điện thoại",
+    "phone_hint": "Nhập số điện thoại của bạn",
+    "error_invalid_phone": "Số điện thoại không hợp lệ",
+    "button_send_code": "Gửi mã xác nhận",
+    "errors": {
+      "user_not_found": "Không tìm thấy người dùng",
+      "unexpected": "Đã xảy ra lỗi không mong muốn"
+    }
+  },
+  "verify_password": {
+    "title": "Xác nhận OTP",
+    "subtitle": "Vui lòng nhập mã OTP đã được gửi về số điện thoại của bạn",
+    "question_not_receive": "Bạn không nhận được mã? ",
+    "resend": "Gửi lại",
+    "button_verify": "Xác thực",
+    "success": {
+      "resend_code": "Đã gửi lại mã xác nhận!"
+    },
+    "errors": {
+      "invalid_phone": "Số điện thoại không hợp lệ",
+      "invalid_code": "Mã xác nhận không chính xác",
+      "expired_code": "Mã xác nhận đã hết hạn",
+      "invalid_otp": "Mã xác nhận không hợp lệ",
+      "unexpected": "Đã xảy ra lỗi không mong muốn"
+    }
+  },
+  "reset_password": {
+    "title": "Đặt lại mật khẩu",
+    "subtitle": "Vui lòng nhập mật khẩu mới của bạn",
+    "new_password_label": "Mật khẩu mới",
+    "confirm_new_password_label": "Xác nhận mật khẩu mới",
+    "button_submit": "Lưu mật khẩu",
+    "error_password_min_length": "Ít nhất 8 ký tự",
+    "error_password_lowercase": "Cần ít nhất 1 chữ thường",
+    "error_password_uppercase": "Cần ít nhất 1 chữ hoa",
+    "error_password_special": "Cần ít nhất 1 ký tự đặc biệt",
+    "error_password_match": "Mật khẩu không khớp",
+    "errors": {
+      "invalid_phone": "Số điện thoại không hợp lệ",
+      "invalid_password": "Mật khẩu không hợp lệ",
+      "unexpected": "Đã xảy ra lỗi không mong muốn"
+    }
   }
 }
