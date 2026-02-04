@@ -8,6 +8,7 @@ import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/widgets/button/button.dart';
 import '../../../../../core/widgets/textinput/input_textfield.dart';
 import '../../providers/register/register_provider.dart';
+import '../../widgets/auth_header.dart';
 
 class RegisterPage extends ConsumerWidget {
   const RegisterPage({super.key});
@@ -25,38 +26,17 @@ class RegisterPage extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SizedBox(height: 60.h),
-              // Title
-              Text(
-                'OMMS',
-                textAlign: TextAlign.center,
-                style: GoogleFonts.inter(
-                  fontSize: 32.sp,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.typoBlack,
-                  letterSpacing: 1.2,
-                ),
-              ),
-              SizedBox(height: 12.h),
-              Text(
-                'register.subtitle'.tr(),
-                textAlign: TextAlign.center,
-                style: GoogleFonts.inter(
-                  fontSize: 14.sp,
-                  color: AppColors.typoBody,
-                  height: 1.5,
-                ),
-              ),
+              AuthHeader(title: 'register.subtitle'.tr(), showBack: false),
               SizedBox(height: 40.h),
 
-              // Email
+              // Phone
               InputTextField(
-                controller: state.emailController,
-                label: 'register.email_label'.tr(),
-                hint: 'register.email_hint'.tr(),
-                keyboardType: TextInputType.emailAddress,
-                hasError: state.hasEmailError,
-                errorText: notifier.emailErrorText,
+                controller: state.phoneController,
+                label: 'register.phone_label'.tr(),
+                hint: 'register.phone_hint'.tr(),
+                keyboardType: TextInputType.phone,
+                hasError: state.hasPhoneError,
+                errorText: notifier.phoneErrorText,
               ),
 
               SizedBox(height: 8.h),

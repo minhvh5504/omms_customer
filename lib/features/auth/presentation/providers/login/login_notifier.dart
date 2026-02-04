@@ -18,24 +18,24 @@ import '../auth/auth_provider.dart';
 
 /// STATE
 class LoginState {
-  final TextEditingController usernameController;
+  final TextEditingController phoneController;
   final TextEditingController passwordController;
   final bool remember;
-  final bool usernameValid;
+  final bool phoneValid;
   final bool passwordValid;
-  final bool hasUserNameError;
+  final bool hasPhoneError;
   final bool hasPasswordError;
   final bool isValid;
   final bool isLoading;
   final String? errorMessage;
 
   const LoginState({
-    required this.usernameController,
+    required this.phoneController,
     required this.passwordController,
     this.remember = false,
-    this.usernameValid = false,
+    this.phoneValid = false,
     this.passwordValid = false,
-    this.hasUserNameError = false,
+    this.hasPhoneError = false,
     this.hasPasswordError = false,
     this.isValid = false,
     this.isLoading = false,
@@ -44,21 +44,21 @@ class LoginState {
 
   LoginState copyWith({
     bool? remember,
-    bool? usernameValid,
+    bool? phoneValid,
     bool? passwordValid,
-    bool? hasUserNameError,
+    bool? hasPhoneError,
     bool? hasPasswordError,
     bool? isValid,
     bool? isLoading,
     String? errorMessage,
   }) {
     return LoginState(
-      usernameController: usernameController,
+      phoneController: phoneController,
       passwordController: passwordController,
       remember: remember ?? this.remember,
-      usernameValid: usernameValid ?? this.usernameValid,
+      phoneValid: phoneValid ?? this.phoneValid,
       passwordValid: passwordValid ?? this.passwordValid,
-      hasUserNameError: hasUserNameError ?? this.hasUserNameError,
+      hasPhoneError: hasPhoneError ?? this.hasPhoneError,
       hasPasswordError: hasPasswordError ?? this.hasPasswordError,
       isValid: isValid ?? this.isValid,
       isLoading: isLoading ?? this.isLoading,
@@ -77,23 +77,23 @@ class LoginNotifier extends StateNotifier<LoginState> {
   LoginNotifier(this._loginUseCase, this._loginWithGoogleUseCase, this.ref)
     : super(
         LoginState(
-          usernameController: TextEditingController(),
+          phoneController: TextEditingController(),
           passwordController: TextEditingController(),
         ),
       ) {
     _loadSavedAccount();
-    state.usernameController.addListener(_validateAll);
+    state.phoneController.addListener(_validateAll);
     state.passwordController.addListener(_validateAll);
   }
 
   /// Load saved credentials from SharedPreferences
   Future<void> _loadSavedAccount() async {
     final prefs = await SharedPreferences.getInstance();
-    final savedUserName = prefs.getString('saved_username') ?? '';
+    final savedPhone = prefs.getString('saved_phone') ?? '';
     final savedPassword = prefs.getString('saved_password') ?? '';
     final remember = prefs.getBool('remember_me') ?? false;
 
-    state.usernameController.text = savedUserName;
+    state.phoneController.text = savedPhone;
     state.passwordController.text = savedPassword;
     state = state.copyWith(remember: remember);
     _validateAll();
@@ -101,23 +101,23 @@ class LoginNotifier extends StateNotifier<LoginState> {
 
   /// Validate all input fields
   void _validateAll() {
-    final usernameText = state.usernameController.text.trim();
+    final phoneText = state.phoneController.text.trim();
     final passText = state.passwordController.text.trim();
 
     // true = valid
-    final usernameValid = Validation.isValidEmail(usernameText);
+    final phoneValid = Validation.isPhoneValid(phoneText);
     final passwordValid = Validation.isStrongPassword(passText);
 
     // true = form valid
-    final valid = usernameValid && passwordValid;
+    final valid = phoneValid && passwordValid;
 
     state = state.copyWith(
       // true = valid input
-      usernameValid: usernameValid,
+      phoneValid: phoneValid,
       passwordValid: passwordValid,
 
       // true = show red border
-      hasUserNameError: !usernameValid && usernameText.isNotEmpty,
+      hasPhoneError: !phoneValid && phoneText.isNotEmpty,
       hasPasswordError: !passwordValid && passText.isNotEmpty,
 
       // true = enable submit button
@@ -126,13 +126,13 @@ class LoginNotifier extends StateNotifier<LoginState> {
   }
 
   /// Get error text
-  String? get usernameErrorText {
-    final text = state.usernameController.text.trim();
+  String? get phoneErrorText {
+    final text = state.phoneController.text.trim();
 
     if (text.isEmpty) return null;
 
-    if (!Validation.isValidEmail(text)) {
-      return 'login.error_invalid_email'.tr();
+    if (!Validation.isPhoneValid(text)) {
+      return 'login.error_invalid_phone'.tr();
     }
 
     return null;
@@ -177,11 +177,11 @@ class LoginNotifier extends StateNotifier<LoginState> {
 
     context.go(AppRoutes.menu);
 
-    // final username = state.usernameController.text.trim();
+    // final phone = state.phoneController.text.trim();
     // final password = state.passwordController.text.trim();
 
     // try {
-    //   final user = await _loginUseCase(username, password, 'nurse', 'app');
+    //   final user = await _loginUseCase(phone, password, 'nurse', 'app');
     //   await ref
     //       .read(authProvider.notifier)
     //       .login(
@@ -189,7 +189,7 @@ class LoginNotifier extends StateNotifier<LoginState> {
     //         refreshToken: user.refreshToken,
     //       );
 
-    //   await _handleLoginSuccess(context, username, password);
+    //   await _handleLoginSuccess(context, phone, password);
     // } catch (e) {
     //   _setLoading(false);
 
@@ -213,19 +213,20 @@ class LoginNotifier extends StateNotifier<LoginState> {
 
   /// Handle successful login
   Future<void> _handleLoginSuccess(
+    // ignore: avoid_renaming_method_parameters
     BuildContext context,
-    String username,
+    String phone,
     String password,
   ) async {
     ScaffoldMessenger.of(context).clearSnackBars();
     final prefs = await SharedPreferences.getInstance();
 
     if (state.remember) {
-      await prefs.setString('saved_username', username);
+      await prefs.setString('saved_phone', phone);
       await prefs.setString('saved_password', password);
       await prefs.setBool('remember_me', true);
     } else {
-      await prefs.remove('saved_username');
+      await prefs.remove('saved_phone');
       await prefs.remove('saved_password');
       await prefs.setBool('remember_me', false);
     }
@@ -328,7 +329,7 @@ class LoginNotifier extends StateNotifier<LoginState> {
   /// Dispose
   @override
   void dispose() {
-    state.usernameController.dispose();
+    state.phoneController.dispose();
     state.passwordController.dispose();
     super.dispose();
   }

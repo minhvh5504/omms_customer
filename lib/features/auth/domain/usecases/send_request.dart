@@ -4,7 +4,7 @@ class SendRequest {
   final AuthRepository repository;
   SendRequest(this.repository);
 
-  Future<void> call(String username) {
-    return repository.sendRequest(username);
+  Future<void> call(String phone) {
+    return repository.sendRequest(phone);
   }
 }

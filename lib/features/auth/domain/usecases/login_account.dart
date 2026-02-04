@@ -6,11 +6,11 @@ class LoginAccount {
   LoginAccount(this.repository);
 
   Future<Login> call(
-    String username,
+    String phone,
     String password,
     String loginRole,
     String origin,
   ) {
-    return repository.login(username, password, loginRole, origin);
+    return repository.login(phone, password, loginRole, origin);
   }
 }

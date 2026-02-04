@@ -11,12 +11,12 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<Login> login(
-    String username,
+    String phone,
     String password,
     String loginRole,
     String origin,
   ) {
-    return remoteDataSource.login(username, password, loginRole, origin);
+    return remoteDataSource.login(phone, password, loginRole, origin);
   }
 
   @override
@@ -35,23 +35,23 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<void> sendRequest(String username) {
-    return remoteDataSource.sendRequest(username);
+  Future<void> sendRequest(String phone) {
+    return remoteDataSource.sendRequest(phone);
   }
 
   @override
-  Future<void> verify(String username, String code, String purpose) {
-    return remoteDataSource.verify(username, code, purpose);
+  Future<void> verify(String phone, String code, String purpose) {
+    return remoteDataSource.verify(phone, code, purpose);
   }
 
   @override
-  Future<void> resendCode(String username, String purpose) {
-    return remoteDataSource.resendCode(username, purpose);
+  Future<void> resendCode(String phone, String purpose) {
+    return remoteDataSource.resendCode(phone, purpose);
   }
 
   @override
-  Future<void> resetPassword(String username, String newPassword) {
-    return remoteDataSource.resetPassword(username, newPassword);
+  Future<void> resetPassword(String phone, String newPassword) {
+    return remoteDataSource.resetPassword(phone, newPassword);
   }
 
   @override
