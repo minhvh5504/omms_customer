@@ -11,12 +11,12 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<Login> login(
-    String phone,
+    String identifier,
     String password,
     String loginRole,
     String origin,
   ) {
-    return remoteDataSource.login(phone, password, loginRole, origin);
+    return remoteDataSource.login(identifier, password, loginRole, origin);
   }
 
   @override
@@ -26,33 +26,33 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<Register> register(
-    String email,
+    String fullName,
     String phone,
     String password,
     String role,
   ) async {
-    return remoteDataSource.register(email, phone, password, role);
+    return remoteDataSource.register(fullName, phone, password, role);
+  }
+
+  // @override
+  // Future<void> sendRequest(String phone) {
+  //   return remoteDataSource.sendRequest(phone);
+  // }
+
+  @override
+  Future<void> verifyPhone(String phone, String otp) {
+    return remoteDataSource.verifyPhone(phone, otp);
   }
 
   @override
-  Future<void> sendRequest(String phone) {
-    return remoteDataSource.sendRequest(phone);
+  Future<void> resendOtp(String phone) {
+    return remoteDataSource.resendOtp(phone);
   }
 
-  @override
-  Future<void> verify(String phone, String code, String purpose) {
-    return remoteDataSource.verify(phone, code, purpose);
-  }
-
-  @override
-  Future<void> resendCode(String phone, String purpose) {
-    return remoteDataSource.resendCode(phone, purpose);
-  }
-
-  @override
-  Future<void> resetPassword(String phone, String newPassword) {
-    return remoteDataSource.resetPassword(phone, newPassword);
-  }
+  // @override
+  // Future<void> resetPassword(String phone, String newPassword) {
+  //   return remoteDataSource.resetPassword(phone, newPassword);
+  // }
 
   @override
   Future<RefreshToken> refreshToken(String refreshToken) {

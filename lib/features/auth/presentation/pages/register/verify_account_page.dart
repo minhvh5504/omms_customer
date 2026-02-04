@@ -81,7 +81,7 @@ class VerifyAccountPage extends ConsumerWidget {
                   textAlign: TextAlign.center,
                   style: GoogleFonts.poppins(
                     fontSize: 16.sp,
-                    color: AppColors.typoHeading,
+                    color: AppColors.typoSubHeading,
                   ),
                 ),
 

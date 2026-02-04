@@ -6,11 +6,11 @@ class RegisterAccount {
   RegisterAccount(this.repository);
 
   Future<Register> call(
-    String email,
+    String fullName,
     String phone,
     String password,
     String role,
   ) {
-    return repository.register(email, phone, password, role);
+    return repository.register(fullName, phone, password, role);
   }
 }

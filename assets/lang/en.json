@@ -15,18 +15,24 @@
     "error_password_lowercase": "Need at least 1 lowercase letter",
     "error_password_uppercase": "Need at least 1 uppercase letter",
     "error_password_special": "Need at least 1 special character",
-    "success_login": "Login successfully",
+    "success": {
+      "login": "Login successfully"
+    },
     "errors": {
       "user_not_verified": "User not verified",
-      "wrong_credentials": "Wrong credentials",
-      "failed_connect_server": "Failed to connect to the server",
+      "account_not_verified": "Please verify your phone number first",
+      "invalid_credentials": "Phone number/email or password is incorrect",
+      "oauth_account": "This account was registered via OAuth. Please log in with Google.",
       "user_not_found": "User not found",
+      "failed_connect_server": "Failed to connect to the server",
       "unexpected": "An unexpected error occurred"
     }
   },
   "register": {
     "title": "OMMS",
     "subtitle": "View menus and order your favorite dishes in just a few taps",
+    "fullname_label": "Full Name",
+    "fullname_hint": "Enter your full name",
     "phone_label": "Phone Number",
     "phone_hint": "Enter phone number",
     "password_label": "Password",
@@ -42,9 +48,14 @@
     "error_password_uppercase": "Need at least 1 uppercase letter",
     "error_password_special": "Need at least 1 special character",
     "error_password_match": "Passwords do not match",
+    "error_invalid_fullname": "Full name must be at least 2 characters",
+    "success": {
+      "register": "Register successfully! Please check your phone to verify."
+    },
     "errors": {
-      "phone_exists": "Phone number already exists",
+      "phone_exists": "Phone number already registered",
       "invalid_phone": "Invalid phone number",
+      "user_not_found": "User not found",
       "unexpected": "An unexpected error occurred"
     }
   },
@@ -99,24 +110,28 @@
       "invalid_phone": "Invalid phone number",
       "invalid_code": "Incorrect verification code",
       "expired_code": "Verification code expired",
-      "invalid_otp": "Invalid verification code",
+      "invalid_otp": "Invalid OTP code",
       "unexpected": "An unexpected error occurred"
     }
   },
-  "reset_password": {
-    "title": "Reset Password",
-    "subtitle": "Please enter your new password",
-    "new_password_label": "New Password",
-    "confirm_new_password_label": "Confirm New Password",
-    "button_submit": "Save Password",
-    "error_password_min_length": "At least 8 characters",
-    "error_password_lowercase": "Need at least 1 lowercase letter",
-    "error_password_uppercase": "Need at least 1 uppercase letter",
-    "error_password_special": "Need at least 1 special character",
-    "error_password_match": "Passwords do not match",
+  "verify_account": {
+    "title": "OTP Verification",
+    "subtitle": "Please enter the OTP code sent to your phone",
+    "question_not_receive": "Didn't receive the code? ",
+    "resend": "Resend",
+    "button_verify": "Verify",
+    "success": {
+      "verified": "Account verified successfully!",
+      "resend_code": "Verification code resent!"
+    },
     "errors": {
-      "invalid_phone": "Invalid phone number",
-      "invalid_password": "Invalid password",
+      "already_verified": "Phone number already verified",
+      "invalid_otp": "Invalid OTP code",
+      "otp_expired": "OTP code has expired",
+      "invalid_verification_code": "Invalid verification code",
+      "verification_expired": "Verification code has expired",
+      "user_not_found": "User not found",
+      "failed_connect_server": "Failed to connect to the server",
       "unexpected": "An unexpected error occurred"
     }
   }

@@ -114,7 +114,7 @@ class MenuPage extends ConsumerWidget {
                       itemCount: state.items.length,
                       separatorBuilder: (_, __) => Column(
                         children: [
-                          SizedBox(height: 16.h),
+                          SizedBox(height: 8.h),
                           const Divider(color: Color(0xFFF3F4F6), thickness: 1),
                           SizedBox(height: 16.h),
                         ],
@@ -129,7 +129,7 @@ class MenuPage extends ConsumerWidget {
                           showPrice: true,
                           showAdd: true,
                           onAdd: () {
-                            // TODO: Add to cart logic
+                            notifier.handleAddToCart(item);
                           },
                         );
                       },

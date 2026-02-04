@@ -29,6 +29,18 @@ class RegisterPage extends ConsumerWidget {
               AuthHeader(title: 'register.subtitle'.tr(), showBack: false),
               SizedBox(height: 40.h),
 
+              // Full Name
+              InputTextField(
+                controller: state.fullNameController,
+                label: 'register.fullname_label'.tr(),
+                hint: 'register.fullname_hint'.tr(),
+                keyboardType: TextInputType.name,
+                hasError: state.hasFullNameError,
+                errorText: notifier.fullNameErrorText,
+              ),
+
+              SizedBox(height: 8.h),
+
               // Phone
               InputTextField(
                 controller: state.phoneController,
