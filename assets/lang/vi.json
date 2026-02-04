@@ -15,18 +15,25 @@
     "error_password_lowercase": "Cần ít nhất 1 chữ thường",
     "error_password_uppercase": "Cần ít nhất 1 chữ hoa",
     "error_password_special": "Cần ít nhất 1 ký tự đặc biệt",
-    "success_login": "Đăng nhập thành công",
+    "success": {
+      "login": "Đăng nhập thành công"
+    },
     "errors": {
       "user_not_verified": "Tài khoản chưa được xác minh",
-      "wrong_credentials": "Sai thông tin đăng nhập",
-      "failed_connect_server": "Không thể kết nối đến máy chủ",
+      "wrong_credentials": "Số điện thoại hoặc mật khẩu không chính xác",
+      "account_not_verified": "Vui lòng xác thực số điện thoại của bạn trước",
+      "invalid_credentials": "Số điện thoại/Email hoặc mật khẩu không chính xác",
+      "oauth_account": "Tài khoản này đã được đăng ký qua Google. Vui lòng đăng nhập bằng Google.",
       "user_not_found": "Không tìm thấy người dùng",
+      "failed_connect_server": "Không thể kết nối đến máy chủ",
       "unexpected": "Đã xảy ra lỗi không mong muốn"
     }
   },
   "register": {
     "title": "OMMS",
     "subtitle": "Xem thực đơn và đặt món ăn yêu thích của bạn chỉ với vài thao tác",
+    "fullname_label": "Họ và tên",
+    "fullname_hint": "Nhập họ và tên của bạn",
     "phone_label": "Số điện thoại",
     "phone_hint": "Nhập số điện thoại",
     "password_label": "Mật khẩu",
@@ -42,9 +49,14 @@
     "error_password_uppercase": "Cần ít nhất 1 chữ hoa",
     "error_password_special": "Cần ít nhất 1 ký tự đặc biệt",
     "error_password_match": "Mật khẩu không khớp",
+    "error_invalid_fullname": "Họ và tên phải có ít nhất 2 ký tự",
+    "success": {
+      "register": "Đăng ký thành công! Vui lòng kiểm tra điện thoại để xác thực."
+    },
     "errors": {
-      "phone_exists": "Số điện thoại đã tồn tại",
+      "phone_exists": "Số điện thoại đã được đăng ký",
       "invalid_phone": "Số điện thoại không hợp lệ",
+      "user_not_found": "Không tìm thấy người dùng",
       "unexpected": "Đã xảy ra lỗi không mong muốn"
     }
   },
@@ -100,6 +112,27 @@
       "invalid_code": "Mã xác nhận không chính xác",
       "expired_code": "Mã xác nhận đã hết hạn",
       "invalid_otp": "Mã xác nhận không hợp lệ",
+      "unexpected": "Đã xảy ra lỗi không mong muốn"
+    }
+  },
+  "verify_account": {
+    "title": "Xác thực OTP",
+    "subtitle": "Vui lòng nhập mã OTP đã được gửi đến điện thoại của bạn",
+    "question_not_receive": "Bạn không nhận được mã? ",
+    "resend": "Gửi lại",
+    "button_verify": "Xác thực",
+    "success": {
+      "verified": "Xác thực tài khoản thành công!",
+      "resend_code": "Đã gửi lại mã xác thực!"
+    },
+    "errors": {
+      "already_verified": "Số điện thoại này đã được xác thực",
+      "invalid_otp": "Mã OTP không hợp lệ",
+      "otp_expired": "Mã OTP đã hết hạn",
+      "invalid_verification_code": "Mã xác nhận không hợp lệ",
+      "verification_expired": "Mã xác nhận đã hết hạn",
+      "user_not_found": "Không tìm thấy người dùng",
+      "failed_connect_server": "Không thể kết nối đến máy chủ",
       "unexpected": "Đã xảy ra lỗi không mong muốn"
     }
   },

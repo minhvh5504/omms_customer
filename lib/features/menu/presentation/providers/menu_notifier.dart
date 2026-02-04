@@ -86,4 +86,6 @@ class MenuNotifier extends StateNotifier<MenuState> {
 
     state = state.copyWith(isLoading: false);
   }
+
+  Future<void> handleAddToCart(MenuItem item) async {}
 }

@@ -16,10 +16,12 @@ class LoginModel extends Login {
     final user = raw['user'] is Map ? raw['user'] : {};
 
     return LoginModel(
-      accessToken: raw['access_token']?.toString() ?? '',
-      refreshToken: raw['refresh_token']?.toString() ?? '',
-      tokenType: raw['token_type']?.toString() ?? '',
-      expiresIn: raw['expires_in']?.toString() ?? '',
+      accessToken:
+          (raw['accessToken'] ?? raw['access_token'])?.toString() ?? '',
+      refreshToken:
+          (raw['refreshToken'] ?? raw['refresh_token'])?.toString() ?? '',
+      tokenType: raw['token_type']?.toString() ?? 'Bearer',
+      expiresIn: (raw['expiresIn'] ?? raw['expires_in'])?.toString() ?? '',
 
       fullName: user['fullName']?.toString(),
       phone: user['phone']?.toString(),
@@ -27,10 +29,10 @@ class LoginModel extends Login {
   }
 
   Map<String, dynamic> toJson() => {
-    'access_token': accessToken,
-    'refresh_token': refreshToken,
+    'accessToken': accessToken,
+    'refreshToken': refreshToken,
     'token_type': tokenType,
-    'expires_in': expiresIn,
+    'expiresIn': expiresIn,
     'user': {'fullName': fullName, 'phone': phone},
   };
 }

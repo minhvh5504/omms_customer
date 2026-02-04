@@ -110,12 +110,14 @@ class VerifyAccountNotifier extends StateNotifier<VerifyAccountState> {
 
       final phone = _getPhone();
 
-      await _verifyCodeUseCase(phone, state.otpCode, 'register');
+      await _verifyCodeUseCase(phone, state.otpCode);
       _setLoading(false);
 
-      _handleSuccess(context, message: 'Account verified!');
+      if (!context.mounted) return;
+      _handleSuccess(context, message: 'verify_account.success.verified'.tr());
       context.go(AppRoutes.login);
     } catch (e) {
+      if (!context.mounted) return;
       _handleFailure(context, e);
     }
   }
@@ -127,13 +129,18 @@ class VerifyAccountNotifier extends StateNotifier<VerifyAccountState> {
 
       final phone = _getPhone();
 
-      await _resendCodeUseCase(phone, 'register');
+      await _resendCodeUseCase(phone);
 
       state = state.copyWith(isResending: false);
       _startTimer();
-      _handleSuccess(context, message: 'Verification code resend!');
+      if (!context.mounted) return;
+      _handleSuccess(
+        context,
+        message: 'verify_account.success.resend_code'.tr(),
+      );
     } catch (e) {
       state = state.copyWith(isResending: false);
+      if (!context.mounted) return;
       _handleFailure(context, e);
     }
   }
@@ -146,6 +153,7 @@ class VerifyAccountNotifier extends StateNotifier<VerifyAccountState> {
       errorMessage: null,
     );
 
+    if (!context.mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
@@ -157,12 +165,17 @@ class VerifyAccountNotifier extends StateNotifier<VerifyAccountState> {
 
   // Handle failure
   void _handleFailure(BuildContext context, Object error) {
+    String errorCode = '';
     String errorMessage = 'Unknown error';
 
     if (error is DioException) {
       final data = error.response?.data;
 
       if (data is Map<String, dynamic>) {
+        errorCode =
+            data['messageCode']?.toString() ??
+            data['errorCode']?.toString() ??
+            '';
         errorMessage = data['message']?.toString() ?? errorMessage;
       } else {
         errorMessage = error.message ?? errorMessage;
@@ -171,10 +184,13 @@ class VerifyAccountNotifier extends StateNotifier<VerifyAccountState> {
       errorMessage = error.toString();
     }
 
-    final message = _translateError(errorMessage);
+    final message = _translateError(
+      errorCode.isNotEmpty ? errorCode : errorMessage,
+    );
 
     state = state.copyWith(isLoading: false, errorMessage: message);
 
+    if (!context.mounted) return;
     ScaffoldMessenger.of(context)
       ..clearSnackBars()
       ..showSnackBar(
@@ -192,16 +208,31 @@ class VerifyAccountNotifier extends StateNotifier<VerifyAccountState> {
   }
 
   // Translate errors from use case or API
-  String _translateError(String errorMessage) {
-    final error = errorMessage.replaceFirst('Exception: ', '').trim();
+  String _translateError(String error) {
+    final key = error.replaceFirst('Exception: ', '').trim();
 
-    switch (error) {
-      case 'Invalid phone':
-        return 'verify_account.errors.invalid_phone'.tr();
-      case 'Invalid code':
-        return 'verify_account.errors.invalid_code'.tr();
-      case 'Expired code':
-        return 'verify_account.errors.expired_code'.tr();
+    switch (key) {
+      case 'AUTH.VERIFY.USER_NOT_FOUND':
+      case 'USER_NOT_FOUND':
+      case 'User not found':
+        return 'verify_account.errors.user_not_found'.tr();
+      case 'AUTH.VERIFY.INVALID_OTP':
+      case 'INVALID_OTP':
+      case 'Invalid OTP code':
+        return 'verify_account.errors.invalid_otp'.tr();
+      case 'Invalid verification code':
+        return 'verify_account.errors.invalid_verification_code'.tr();
+      case 'AUTH.VERIFY.OTP_EXPIRED':
+      case 'OTP_EXPIRED':
+      case 'OTP code has expired':
+        return 'verify_account.errors.otp_expired'.tr();
+      case 'Verification code has expired':
+        return 'verify_account.errors.verification_expired'.tr();
+      case 'AUTH.VERIFY.ALREADY_VERIFIED':
+      case 'Phone number already verified':
+        return 'verify_account.errors.already_verified'.tr();
+      case 'Failed to connect to the server':
+        return 'verify_account.errors.failed_connect_server'.tr();
       default:
         return 'verify_account.errors.unexpected'.tr();
     }
@@ -226,17 +257,17 @@ class VerifyAccountNotifier extends StateNotifier<VerifyAccountState> {
   /// Get phone
   String _getPhone() {
     final prev = _ref.read(previousPageProvider);
-
     if (prev == 'register') {
       final registerState = _ref.read(registerNotifierProvider);
-      return registerState.phoneController.text.trim();
+      final phone = registerState.phoneController.text.trim();
+      return phone;
     }
 
     if (prev == 'login') {
       final loginState = _ref.read(loginNotifierProvider);
-      return loginState.phoneController.text.trim();
+      final phone = loginState.phoneController.text.trim();
+      return phone;
     }
-
     return '';
   }
 

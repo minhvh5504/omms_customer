@@ -87,7 +87,7 @@ class _CustomBottomNavBarState extends ConsumerState<CustomBottomNavBar> {
                             height: 24.w,
                             colorFilter: ColorFilter.mode(
                               currentIndex == index
-                                  ? Colors.orange
+                                  ? AppColors.bgPrimary
                                   : AppColors.typoDisable,
                               BlendMode.srcIn,
                             ),
@@ -104,7 +104,7 @@ class _CustomBottomNavBarState extends ConsumerState<CustomBottomNavBar> {
                     style: GoogleFonts.poppins(
                       fontSize: 10.sp,
                       color: currentIndex == index
-                          ? Colors.orange
+                          ? AppColors.bgPrimary
                           : AppColors.typoDisable,
                       fontWeight: FontWeight.w600,
                     ),

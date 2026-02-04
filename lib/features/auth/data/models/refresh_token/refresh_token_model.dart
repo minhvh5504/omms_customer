@@ -16,10 +16,12 @@ class RefreshTokenModel extends RefreshToken {
     }
 
     return RefreshTokenModel(
-      accessToken: data['access_token'] ?? '',
-      refreshToken: data['refresh_token'] ?? '',
-      tokenType: data['token_type'] ?? '',
-      expiresIn: data['expires_in']?.toString() ?? '',
+      accessToken:
+          (data['accessToken'] ?? data['access_token'])?.toString() ?? '',
+      refreshToken:
+          (data['refreshToken'] ?? data['refresh_token'])?.toString() ?? '',
+      tokenType: data['token_type']?.toString() ?? 'Bearer',
+      expiresIn: (data['expiresIn'] ?? data['expires_in'])?.toString() ?? '',
     );
   }
 }

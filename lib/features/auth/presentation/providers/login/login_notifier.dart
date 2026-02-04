@@ -175,40 +175,41 @@ class LoginNotifier extends StateNotifier<LoginState> {
 
     _setLoading(true);
 
-    context.go(AppRoutes.menu);
+    final phone = state.phoneController.text.trim();
+    final password = state.passwordController.text.trim();
 
-    // final phone = state.phoneController.text.trim();
-    // final password = state.passwordController.text.trim();
+    try {
+      final user = await _loginUseCase(phone, password, 'nurse', 'app');
+      await ref
+          .read(authProvider.notifier)
+          .login(
+            accessToken: user.accessToken,
+            refreshToken: user.refreshToken,
+          );
 
-    // try {
-    //   final user = await _loginUseCase(phone, password, 'nurse', 'app');
-    //   await ref
-    //       .read(authProvider.notifier)
-    //       .login(
-    //         accessToken: user.accessToken,
-    //         refreshToken: user.refreshToken,
-    //       );
+      if (!context.mounted) return;
+      await _handleLoginSuccess(context, phone, password);
+    } catch (e) {
+      _setLoading(false);
 
-    //   await _handleLoginSuccess(context, phone, password);
-    // } catch (e) {
-    //   _setLoading(false);
+      if (!context.mounted) return;
+      _handleFailure(context, e);
 
-    //   _handleFailure(context, e);
+      String backendMessage = '';
 
-    //   String backendMessage = '';
+      if (e is DioException) {
+        final data = e.response?.data;
+        if (data is Map<String, dynamic>) {
+          backendMessage = data['message']?.toString().toLowerCase() ?? '';
+        }
+      }
 
-    //   if (e is DioException) {
-    //     final data = e.response?.data;
-    //     if (data is Map<String, dynamic>) {
-    //       backendMessage = data['message']?.toString().toLowerCase() ?? '';
-    //     }
-    //   }
-
-    //   if (backendMessage.contains('user not verified')) {
-    //     await _showUnverifiedAccountPopup(context);
-    //     return;
-    //   }
-    // }
+      if (backendMessage.contains('user not verified')) {
+        if (!context.mounted) return;
+        await _showUnverifiedAccountPopup(context);
+        return;
+      }
+    }
   }
 
   /// Handle successful login
@@ -218,6 +219,7 @@ class LoginNotifier extends StateNotifier<LoginState> {
     String phone,
     String password,
   ) async {
+    if (!context.mounted) return;
     ScaffoldMessenger.of(context).clearSnackBars();
     final prefs = await SharedPreferences.getInstance();
 
@@ -240,12 +242,17 @@ class LoginNotifier extends StateNotifier<LoginState> {
 
   /// Handle failure
   void _handleFailure(BuildContext context, Object error) {
+    String errorCode = '';
     String errorMessage = 'Unknown error';
 
     if (error is DioException) {
       final data = error.response?.data;
 
       if (data is Map<String, dynamic>) {
+        errorCode =
+            data['messageCode']?.toString() ??
+            data['errorCode']?.toString() ??
+            '';
         errorMessage = data['message']?.toString() ?? errorMessage;
       } else {
         errorMessage = error.message ?? errorMessage;
@@ -254,10 +261,13 @@ class LoginNotifier extends StateNotifier<LoginState> {
       errorMessage = error.toString();
     }
 
-    final message = _translateError(errorMessage);
+    final message = _translateError(
+      errorCode.isNotEmpty ? errorCode : errorMessage,
+    );
 
     state = state.copyWith(isLoading: false, errorMessage: message);
 
+    if (!context.mounted) return;
     ScaffoldMessenger.of(context)
       ..clearSnackBars()
       ..showSnackBar(
@@ -275,17 +285,24 @@ class LoginNotifier extends StateNotifier<LoginState> {
   }
 
   // Translate error messages
-  String _translateError(String errorMessage) {
-    final error = errorMessage.replaceFirst('Exception: ', '').trim();
-    switch (error) {
-      case 'User not verified':
-        return 'login.errors.user_not_verified'.tr();
+  String _translateError(String error) {
+    final key = error.replaceFirst('Exception: ', '').trim();
+    switch (key) {
+      case 'INVALID_CREDENTIALS':
+      case 'Phone number/email or password is incorrect':
       case 'Wrong credentials':
-        return 'login.errors.wrong_credentials'.tr();
-      case 'Failed to connect to the server':
-        return 'login.errors.failed_connect_server'.tr();
+        return 'login.errors.invalid_credentials'.tr();
+      case 'This account was registered via OAuth. Please log in with Google.':
+        return 'login.errors.oauth_account'.tr();
+      case 'ACCOUNT_NOT_VERIFIED':
+      case 'Please verify your phone number first':
+      case 'User not verified':
+        return 'login.errors.account_not_verified'.tr();
+      case 'USER_NOT_FOUND':
       case 'User not found':
         return 'login.errors.user_not_found'.tr();
+      case 'Failed to connect to the server':
+        return 'login.errors.failed_connect_server'.tr();
       default:
         return 'login.errors.unexpected'.tr();
     }

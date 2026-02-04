@@ -9,16 +9,16 @@ class AuthRemoteDataSource {
   AuthRemoteDataSource(this.api);
 
   Future<LoginModel> login(
-    String phone,
+    String identifier,
     String password,
     String loginRole,
     String origin,
   ) {
     return api.login({
-      'phone': phone,
+      'identifier': identifier,
       'password': password,
-      'loginRole': loginRole,
-      'origin': origin,
+      // 'loginRole': loginRole,
+      // 'origin': origin,
     });
   }
 
@@ -27,36 +27,36 @@ class AuthRemoteDataSource {
   }
 
   Future<RegisterModel> register(
-    String email,
+    String fullName,
     String phone,
     String password,
     String role,
   ) {
     return api.register({
-      'email': email,
+      'fullName': fullName,
       'phone': phone,
       'password': password,
-      'role': role,
+      // 'role': role,
     });
   }
 
-  Future<void> sendRequest(String phone) {
-    return api.sendRequest({'phone': phone});
+  // Future<void> sendRequest(String phone) {
+  //   return api.sendRequest({'phone': phone});
+  // }
+
+  Future<void> verifyPhone(String phone, String otp) {
+    return api.verifyPhone({'phone': phone, 'otp': otp});
   }
 
-  Future<void> verify(String phone, String code, String purpose) {
-    return api.verify({'to': phone, 'code': code, 'purpose': purpose});
+  Future<void> resendOtp(String phone) {
+    return api.resendOtp({'phone': phone});
   }
 
-  Future<void> resendCode(String phone, String purpose) {
-    return api.resendCode({'to': phone, 'purpose': purpose});
-  }
-
-  Future<void> resetPassword(String phone, String newPassword) {
-    return api.resetPassword({'phone': phone, 'password': newPassword});
-  }
+  // Future<void> resetPassword(String phone, String newPassword) {
+  //   return api.resetPassword({'phone': phone, 'password': newPassword});
+  // }
 
   Future<RefreshTokenModel> refreshToken(String refreshToken) {
-    return api.refreshToken({'refresh_token': refreshToken});
+    return api.refreshToken({'refreshToken': refreshToken});
   }
 }

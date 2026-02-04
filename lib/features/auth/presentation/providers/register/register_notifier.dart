@@ -7,15 +7,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../../core/config/routing/app_routes.dart';
+import '../../../../../core/providers/app_provider.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/utils/validation.dart';
 import '../../../domain/usecases/register_account.dart';
 
 class RegisterState {
+  final TextEditingController fullNameController;
   final TextEditingController phoneController;
   final TextEditingController passwordController;
   final TextEditingController confirmPasswordController;
 
+  final bool hasFullNameError;
   final bool hasPhoneError;
   final bool hasPasswordError;
   final bool hasConfirmPasswordError;
@@ -24,9 +27,11 @@ class RegisterState {
   final String? errorMessage;
 
   const RegisterState({
+    required this.fullNameController,
     required this.phoneController,
     required this.passwordController,
     required this.confirmPasswordController,
+    this.hasFullNameError = false,
     this.hasPhoneError = false,
     this.hasPasswordError = false,
     this.hasConfirmPasswordError = false,
@@ -36,6 +41,7 @@ class RegisterState {
   });
 
   RegisterState copyWith({
+    bool? hasFullNameError,
     bool? hasPhoneError,
     bool? hasPasswordError,
     bool? hasConfirmPasswordError,
@@ -44,11 +50,12 @@ class RegisterState {
     String? errorMessage,
   }) {
     return RegisterState(
+      fullNameController: fullNameController,
       phoneController: phoneController,
       passwordController: passwordController,
       confirmPasswordController: confirmPasswordController,
+      hasFullNameError: hasFullNameError ?? this.hasFullNameError,
       hasPhoneError: hasPhoneError ?? this.hasPhoneError,
-      hasPasswordError: hasPasswordError ?? this.hasPasswordError,
       hasConfirmPasswordError:
           hasConfirmPasswordError ?? this.hasConfirmPasswordError,
       isValid: isValid ?? this.isValid,
@@ -65,6 +72,7 @@ class RegisterNotifier extends StateNotifier<RegisterState> {
   RegisterNotifier(this._registerUseCase, this.ref)
     : super(
         RegisterState(
+          fullNameController: TextEditingController(),
           phoneController: TextEditingController(),
           passwordController: TextEditingController(),
           confirmPasswordController: TextEditingController(),
@@ -75,6 +83,7 @@ class RegisterNotifier extends StateNotifier<RegisterState> {
 
   // Add listeners
   void _addListeners() {
+    state.fullNameController.addListener(_validateAll);
     state.phoneController.addListener(_validateAll);
     state.passwordController.addListener(_validateAll);
     state.confirmPasswordController.addListener(_validateAll);
@@ -82,23 +91,39 @@ class RegisterNotifier extends StateNotifier<RegisterState> {
 
   // Validate all input fields
   void _validateAll() {
+    final fullName = state.fullNameController.text.trim();
     final phone = state.phoneController.text.trim();
     final password = state.passwordController.text.trim();
     final confirmPassword = state.confirmPasswordController.text.trim();
 
+    final fullNameValid = fullName.length >= 2;
     final phoneValid = Validation.isPhoneValid(phone);
     final passwordValid = Validation.isStrongPassword(password);
     final confirmPasswordValid = confirmPassword == password;
 
-    final isValid = phoneValid && passwordValid && confirmPasswordValid;
+    final isValid =
+        fullNameValid && phoneValid && passwordValid && confirmPasswordValid;
 
     state = state.copyWith(
+      hasFullNameError: !fullNameValid && fullName.isNotEmpty,
       hasPhoneError: !phoneValid && phone.isNotEmpty,
-      hasPasswordError: !passwordValid && password.isNotEmpty,
       hasConfirmPasswordError:
           !confirmPasswordValid && confirmPassword.isNotEmpty,
       isValid: isValid,
     );
+  }
+
+  /// Get error full name text
+  String? get fullNameErrorText {
+    final text = state.fullNameController.text.trim();
+
+    if (text.isEmpty) return null;
+
+    if (text.length < 2) {
+      return 'register.error_invalid_fullname'.tr();
+    }
+
+    return null;
   }
 
   /// Get error email text
@@ -159,37 +184,35 @@ class RegisterNotifier extends StateNotifier<RegisterState> {
 
     _setLoading(true);
 
+    final fullName = state.fullNameController.text.trim();
     final phone = state.phoneController.text.trim();
     final password = state.passwordController.text.trim();
 
     try {
-      // Pass phone to both email and phone params if required by backend,
-      // or just to phone. Given the context, we use phone.
-      await _registerUseCase('', phone, password, 'customer');
+      await _registerUseCase(fullName, phone, password, 'customer');
       _setLoading(false);
 
-      // Navigate to login or showing success message
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Register account successful!, Please login'),
-          backgroundColor: AppColors.bgPrimary,
-          behavior: SnackBarBehavior.floating,
-        ),
-      );
-      context.go(AppRoutes.login);
+      ref.read(previousPageProvider.notifier).state = 'register';
+      context.go(AppRoutes.verifyaccount);
     } catch (e) {
+      if (!context.mounted) return;
       _handleFailure(context, e);
     }
   }
 
   // Handle failure
   void _handleFailure(BuildContext context, Object error) {
+    String errorCode = '';
     String errorMessage = 'Unknown error';
 
     if (error is DioException) {
       final data = error.response?.data;
 
       if (data is Map<String, dynamic>) {
+        errorCode =
+            data['messageCode']?.toString() ??
+            data['errorCode']?.toString() ??
+            '';
         errorMessage = data['message']?.toString() ?? errorMessage;
       } else {
         errorMessage = error.message ?? errorMessage;
@@ -198,10 +221,13 @@ class RegisterNotifier extends StateNotifier<RegisterState> {
       errorMessage = error.toString();
     }
 
-    final message = _translateError(errorMessage);
+    final message = _translateError(
+      errorCode.isNotEmpty ? errorCode : errorMessage,
+    );
 
     state = state.copyWith(isLoading: false, errorMessage: message);
 
+    if (!context.mounted) return;
     ScaffoldMessenger.of(context)
       ..clearSnackBars()
       ..showSnackBar(
@@ -214,17 +240,15 @@ class RegisterNotifier extends StateNotifier<RegisterState> {
   }
 
   // Translate error messages
-  String _translateError(String errorMessage) {
-    final error = errorMessage.replaceFirst('Exception: ', '').trim();
-    switch (error) {
-      case 'Email already exists':
+  String _translateError(String error) {
+    final key = error.replaceFirst('Exception: ', '').trim();
+    switch (key) {
+      case 'AUTH.REGISTER.PHONE_EXISTS':
+      case 'Phone number already registered':
         return 'register.errors.phone_exists'.tr();
-      case 'Phone number already exists':
-        return 'register.errors.phone_exists'.tr();
-      case 'email must be an email':
-        return 'register.errors.invalid_phone'.tr();
-      case 'phone must be a phone':
-        return 'register.errors.invalid_phone'.tr();
+      case 'USER_NOT_FOUND':
+      case 'User not found':
+        return 'register.errors.user_not_found'.tr();
       default:
         return 'register.errors.unexpected'.tr();
     }
@@ -253,6 +277,7 @@ class RegisterNotifier extends StateNotifier<RegisterState> {
 
   @override
   void dispose() {
+    state.fullNameController.dispose();
     state.phoneController.dispose();
     state.passwordController.dispose();
     state.confirmPasswordController.dispose();

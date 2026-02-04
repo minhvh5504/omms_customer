@@ -11,27 +11,30 @@ part 'auth_api.g.dart';
 abstract class AuthApi {
   factory AuthApi(Dio dio) = _AuthApi;
 
-  @POST('/auth/login')
+  @POST('auth/login')
   Future<LoginModel> login(@Body() Map<String, dynamic> body);
 
-  @POST('/auth/firebase/callback')
+  @POST('auth/google')
   Future<LoginModel> loginWithGoogle(@Body() Map<String, dynamic> body);
 
-  @POST('/auth/register')
+  @POST('auth/register')
   Future<RegisterModel> register(@Body() Map<String, dynamic> body);
 
-  @POST('/auth/forgot-password')
-  Future<void> sendRequest(@Body() Map<String, dynamic> body);
+  @POST('auth/verify-phone')
+  Future<void> verifyPhone(@Body() Map<String, dynamic> body);
 
-  @POST('/auth/verify-otp')
-  Future<void> verify(@Body() Map<String, dynamic> body);
+  @POST('auth/verify-email')
+  Future<void> verifyEmail(@Body() Map<String, dynamic> body);
 
-  @POST('/auth/request-otp')
-  Future<void> resendCode(@Body() Map<String, dynamic> body);
+  @POST('auth/resend-otp')
+  Future<void> resendOtp(@Body() Map<String, dynamic> body);
 
-  @POST('/auth/reset-password')
-  Future<void> resetPassword(@Body() Map<String, dynamic> body);
-
-  @POST('/auth/refresh')
+  @POST('auth/refresh')
   Future<RefreshTokenModel> refreshToken(@Body() Map<String, dynamic> body);
+
+  @POST('auth/logout')
+  Future<void> logout(@Body() Map<String, dynamic> body);
+
+  @GET('auth/profile')
+  Future<dynamic> getProfile();
 }

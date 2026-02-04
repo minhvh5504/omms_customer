@@ -79,7 +79,7 @@ class FoodItemCard extends StatelessWidget {
                     Expanded(
                       child: Text(
                         name,
-                        style: GoogleFonts.inter(
+                        style: GoogleFonts.poppins(
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w700,
                           color: AppColors.typoBlack,
@@ -117,14 +117,7 @@ class FoodItemCard extends StatelessWidget {
                     Row(
                       children: [
                         if (showPrice && price != null)
-                          Text(
-                            price!,
-                            style: GoogleFonts.inter(
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w700,
-                              color: AppColors.typoBlack,
-                            ),
-                          ),
+                          _buildPriceWidget(price!),
                         if (showTime && time != null) ...[
                           Icon(
                             Icons.access_time,
@@ -212,5 +205,69 @@ class FoodItemCard extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Widget _buildPriceWidget(String price) {
+    if (price.isEmpty) {
+      return Text(
+        '0 VND',
+        style: GoogleFonts.poppins(
+          fontSize: 12.sp,
+          fontWeight: FontWeight.w700,
+          color: AppColors.typoBlack,
+        ),
+      );
+    }
+
+    try {
+      final cleanPrice = price.replaceAll(RegExp(r'[^0-9.]'), '');
+      final number = double.parse(cleanPrice);
+      final formatter = RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))');
+      final formattedNumber = number.toInt().toString().replaceAllMapped(
+        formatter,
+        (Match m) => '${m[1]},',
+      );
+
+      final int lastCommaIndex = formattedNumber.lastIndexOf(',');
+      String bigPart = formattedNumber;
+      String smallPart = ' VND';
+
+      if (lastCommaIndex != -1) {
+        bigPart = formattedNumber.substring(0, lastCommaIndex);
+        smallPart = '${formattedNumber.substring(lastCommaIndex)} VND';
+      }
+
+      return Text.rich(
+        TextSpan(
+          children: [
+            TextSpan(
+              text: bigPart,
+              style: GoogleFonts.poppins(
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w600,
+                color: AppColors.typoBlack,
+              ),
+            ),
+            TextSpan(
+              text: smallPart,
+              style: GoogleFonts.poppins(
+                fontSize: 12.sp,
+                fontWeight: FontWeight.w700,
+                color: AppColors.typoBlack,
+              ),
+            ),
+          ],
+        ),
+      );
+    } catch (e) {
+      return Text(
+        '$price VND',
+        style: GoogleFonts.poppins(
+          fontSize: 16.sp,
+          fontWeight: FontWeight.w600,
+          color: AppColors.typoBlack,
+        ),
+      );
+    }
   }
 }
