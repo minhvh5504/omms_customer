@@ -9,13 +9,13 @@ class AuthRemoteDataSource {
   AuthRemoteDataSource(this.api);
 
   Future<LoginModel> login(
-    String username,
+    String phone,
     String password,
     String loginRole,
     String origin,
   ) {
     return api.login({
-      'username': username,
+      'phone': phone,
       'password': password,
       'loginRole': loginRole,
       'origin': origin,
@@ -40,20 +40,20 @@ class AuthRemoteDataSource {
     });
   }
 
-  Future<void> sendRequest(String username) {
-    return api.sendRequest({'username': username});
+  Future<void> sendRequest(String phone) {
+    return api.sendRequest({'phone': phone});
   }
 
-  Future<void> verify(String username, String code, String purpose) {
-    return api.verify({'to': username, 'code': code, 'purpose': purpose});
+  Future<void> verify(String phone, String code, String purpose) {
+    return api.verify({'to': phone, 'code': code, 'purpose': purpose});
   }
 
-  Future<void> resendCode(String username, String purpose) {
-    return api.resendCode({'to': username, 'purpose': purpose});
+  Future<void> resendCode(String phone, String purpose) {
+    return api.resendCode({'to': phone, 'purpose': purpose});
   }
 
-  Future<void> resetPassword(String username, String newPassword) {
-    return api.resetPassword({'username': username, 'password': newPassword});
+  Future<void> resetPassword(String phone, String newPassword) {
+    return api.resetPassword({'phone': phone, 'password': newPassword});
   }
 
   Future<RefreshTokenModel> refreshToken(String refreshToken) {

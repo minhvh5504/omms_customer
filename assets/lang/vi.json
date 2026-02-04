@@ -1,8 +1,8 @@
 {
   "login": {
     "welcome_back": "Xem thực đơn và đặt món ăn yêu thích của bạn chỉ với vài thao tác",
-    "email_label": "Email",
-    "email_hint": "Nhập email của bạn",
+    "phone_label": "Số điện thoại",
+    "phone_hint": "Nhập số điện thoại",
     "password_label": "Mật khẩu",
     "password_hint": "Nhập mật khẩu của bạn",
     "forgot_password": "Quên mật khẩu?",
@@ -10,8 +10,7 @@
     "login_button": "Đăng nhập",
     "no_account": "Bạn chưa có tài khoản? ",
     "sign_up": "Đăng ký",
-    "error_invalid_email": "Định dạng email không hợp lệ",
-    "error_invalid_phone": "Định dạng số điện thoại không hợp lệ",
+    "error_invalid_phone": "Số điện thoại không hợp lệ",
     "error_password_min_length": "Ít nhất 8 ký tự",
     "error_password_lowercase": "Cần ít nhất 1 chữ thường",
     "error_password_uppercase": "Cần ít nhất 1 chữ hoa",
@@ -28,8 +27,8 @@
   "register": {
     "title": "OMMS",
     "subtitle": "Xem thực đơn và đặt món ăn yêu thích của bạn chỉ với vài thao tác",
-    "email_label": "Email",
-    "email_hint": "Nhập email của bạn",
+    "phone_label": "Số điện thoại",
+    "phone_hint": "Nhập số điện thoại",
     "password_label": "Mật khẩu",
     "password_hint": "Nhập mật khẩu của bạn",
     "confirm_password_label": "Xác nhận mật khẩu",
@@ -37,15 +36,15 @@
     "button_sign_up": "Đăng ký",
     "footer_question": "Bạn đã có tài khoản? ",
     "footer_action": "Đăng nhập",
-    "error_invalid_email": "Định dạng email không hợp lệ",
+    "error_invalid_phone": "Số điện thoại không hợp lệ",
     "error_password_min_length": "Ít nhất 8 ký tự",
     "error_password_lowercase": "Cần ít nhất 1 chữ thường",
     "error_password_uppercase": "Cần ít nhất 1 chữ hoa",
     "error_password_special": "Cần ít nhất 1 ký tự đặc biệt",
     "error_password_match": "Mật khẩu không khớp",
     "errors": {
-      "email_exists": "Email đã tồn tại",
-      "invalid_email": "Email không hợp lệ",
+      "phone_exists": "Số điện thoại đã tồn tại",
+      "invalid_phone": "Số điện thoại không hợp lệ",
       "unexpected": "Đã xảy ra lỗi không mong muốn"
     }
   },

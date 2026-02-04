@@ -4,7 +4,7 @@ import '../entities/register.dart';
 
 abstract class AuthRepository {
   Future<Login> login(
-    String username,
+    String phone,
     String password,
     String loginRole,
     String origin,
@@ -16,9 +16,9 @@ abstract class AuthRepository {
     String password,
     String role,
   );
-  Future<void> sendRequest(String username);
-  Future<void> verify(String username, String code, String purpose);
-  Future<void> resendCode(String username, String purpose);
-  Future<void> resetPassword(String username, String newPassword);
+  Future<void> sendRequest(String phone);
+  Future<void> verify(String phone, String code, String purpose);
+  Future<void> resendCode(String phone, String purpose);
+  Future<void> resetPassword(String phone, String newPassword);
   Future<RefreshToken> refreshToken(String refreshToken);
 }

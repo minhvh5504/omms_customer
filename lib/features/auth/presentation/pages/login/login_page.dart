@@ -8,6 +8,7 @@ import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/widgets/button/button.dart';
 import '../../../../../core/widgets/textinput/input_textfield.dart';
 import '../../providers/login/login_provider.dart';
+import '../../widgets/auth_header.dart';
 
 class LoginPage extends ConsumerWidget {
   const LoginPage({super.key});
@@ -25,38 +26,17 @@ class LoginPage extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SizedBox(height: 60.h),
-              // Title
-              Text(
-                'OMMS',
-                textAlign: TextAlign.center,
-                style: GoogleFonts.inter(
-                  fontSize: 32.sp,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.typoBlack,
-                  letterSpacing: 1.2,
-                ),
-              ),
-              SizedBox(height: 12.h),
-              Text(
-                'login.welcome_back'.tr(),
-                textAlign: TextAlign.center,
-                style: GoogleFonts.inter(
-                  fontSize: 14.sp,
-                  color: AppColors.typoBody,
-                  height: 1.5,
-                ),
-              ),
+              AuthHeader(title: 'login.welcome_back'.tr(), showBack: false),
               SizedBox(height: 40.h),
 
-              // Email
+              // Phone
               InputTextField(
-                controller: state.usernameController,
-                label: 'login.email_label'.tr(),
-                hint: 'login.email_hint'.tr(),
-                keyboardType: TextInputType.emailAddress,
-                hasError: state.hasUserNameError,
-                errorText: notifier.usernameErrorText,
+                controller: state.phoneController,
+                label: 'login.phone_label'.tr(),
+                hint: 'login.phone_hint'.tr(),
+                keyboardType: TextInputType.phone,
+                hasError: state.hasPhoneError,
+                errorText: notifier.phoneErrorText,
               ),
               SizedBox(height: 24.h),
 
