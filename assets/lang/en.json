@@ -84,6 +84,13 @@
   },
   "profile": {
     "title": "Profile",
+    "setting": "Settings",
+    "my_account": "My Account",
+    "security": "Security",
+    "language": "Language",
+    "information": "Information",
+    "help_support": "Help & Support",
+    "app_version": "App Version",
     "logout": "Logout"
   },
   "send_request": {
@@ -134,5 +141,17 @@
       "failed_connect_server": "Failed to connect to the server",
       "unexpected": "An unexpected error occurred"
     }
+  },
+  "logout_dialog": {
+    "title": "Logout",
+    "message": "Are you sure you want to logout?",
+    "cancel": "Cancel",
+    "confirm": "Logout"
+  },
+  "language": {
+    "language": "Language",
+    "english": "English",
+    "vietnamese": "Vietnamese",
+    "save": "Save"
   }
 }

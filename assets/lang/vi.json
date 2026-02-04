@@ -85,6 +85,13 @@
   },
   "profile": {
     "title": "Cá nhân",
+    "setting": "Cài đặt",
+    "my_account": "Tài khoản của tôi",
+    "security": "Bảo mật",
+    "language": "Ngôn ngữ",
+    "information": "Thông tin",
+    "help_support": "Hỗ trợ",
+    "app_version": "Phiên bản ứng dụng",
     "logout": "Đăng xuất"
   },
   "send_request": {
@@ -152,5 +159,17 @@
       "invalid_password": "Mật khẩu không hợp lệ",
       "unexpected": "Đã xảy ra lỗi không mong muốn"
     }
+  },
+  "logout_dialog": {
+    "title": "Đăng xuất",
+    "message": "Bạn có chắc chắn muốn đăng xuất không?",
+    "cancel": "Hủy",
+    "confirm": "Đăng xuất"
+  },
+  "language": {
+    "language": "Ngôn ngữ",
+    "english": "Tiếng Anh",
+    "vietnamese": "Tiếng Việt",
+    "save": "Lưu"
   }
 }
